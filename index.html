@@ -14,26 +14,24 @@
 
         // Функция для отображения информации о госте
         async function displayGuestInfo() {
-            const guestID = getQueryParam('guestID');
-
-            if (guestID) {
-                try {
-                    // Используйте предоставленный URL для доступа к вашему Google Apps Script
-                    const response = await fetch(`https://script.google.com/macros/s/AKfycbwXLCA40ncwDgTbdN9pXs8AxGhuL2cgnIIAZgH1DZENvtQFnrZ2n1SRVzKaffVFBnUePQ/exec?guestID=${guestID}`);
-                    const guestData = await response.json();
-
-                    if (guestData.name && guestData.surname) {
-                        document.getElementById('guest-info').innerText = `Имя: ${guestData.name}, Фамилия: ${guestData.surname}`;
-                    } else {
-                        document.getElementById('guest-info').innerText = 'Гость не найден.';
-                    }
-                } catch (error) {
-                    console.error('Ошибка получения данных:', error);
-                    document.getElementById('guest-info').innerText = 'Ошибка получения данных.';
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestID = urlParams.get('guestID');
+        if (guestID) {
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwXLCA40ncwDgTbdN9pXs8AxGhuL2cgnIIAZgH1DZENvtQFnrZ2n1SRVzKaffVFBnUePQ/exec?guestID=' + guestID);
+                const guestData = await response.json();
+                if (guestData.name && guestData.surname) {
+                    document.getElementById('guest-info').innerText = 'Имя: ' + guestData.name + ', Фамилия: ' + guestData.surname;
+                } else {
+                    document.getElementById('guest-info').innerText = 'Гость не найден.';
                 }
-            } else {
-                document.getElementById('guest-info').innerText = 'ID гостя не указан.';
+            } catch (error) {
+                console.error('Ошибка получения данных:', error);
+                document.getElementById('guest-info').innerText = 'Ошибка получения данных.';
             }
+        } else {
+            document.getElementById('guest-info').innerText = 'ID гостя не указан.';
+        }
         }
 
         // Вызов функции при загрузке страницы
