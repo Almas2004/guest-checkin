@@ -18,7 +18,7 @@
         const guestID = urlParams.get('guestID');
         if (guestID) {
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwXLCA40ncwDgTbdN9pXs8AxGhuL2cgnIIAZgH1DZENvtQFnrZ2n1SRVzKaffVFBnUePQ/exec?guestID=' + guestID);
+                const response = await fetch('https://script.google.com/macros/s/AKfycbyti-vNGHq1vY6PdqEjDfVQO_B4_vt9HkPvoXg6FBSos1pk93RE3q35xmygjsY3SK-aaA/exec' + guestID);
                 const guestData = await response.json();
                 if (guestData.name && guestData.surname) {
                     document.getElementById('guest-info').innerText = 'Имя: ' + guestData.name + ', Фамилия: ' + guestData.surname;
